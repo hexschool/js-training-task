@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>產品列表</h2>
+      <div id="app" class="card-columns">
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      var obj = {
+        data: {
+          uuid: '請填入自己的 UUID',
+          products: [],
+        },
+        getData: function() {
+          var vm = this;
+          var url = `https://course-ec-api.hexschool.io/api/${this.data.uuid}/ec/products`;
+
+          axios.get(url)
+            .then(function (response) {
+              vm.data.products = response.data.data;
+              vm.render();
+            })
+        },
+        render: function() {
+          var app = document.getElementById('app');
+          var products = this.data.products;
+          var str = '';
+          products.forEach(function(item) {
+            str += `
+            <div class="card">
+              <img src="${ item.imageUrl[0] }" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">${ item.title }</h5>
+                <p class="card-text">${ item.content }</p>
+              </div>
+            </div>`;
+          });
+          app.innerHTML = str;
+        },
+      };
+
+      obj.getData();
+    </script>
+  </body>
+
+</html>
