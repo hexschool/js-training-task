@@ -1,0 +1,360 @@
+{
+  "name": {
+    "en": "Big Five personality traits test (simple version)",
+    "zh": "五大性格特質心理測驗(簡版)"
+  },
+  "description": "五大性格特質(Big Five personality traits)在心理學中常被作為人格的評估，有時也會用來預測學業成就、以及作為適合職業的參考。此理論認為人的主要性格由五項人格特質組成：經驗開放性、盡責性、外向性、親和性、情緒不穩定性。",
+  "degree": {
+    "high": 7,
+    "middle": 6,
+    "low": 5
+  },
+  "traits": {
+    "en": [
+      "openness",
+      "conscientiousness",
+      "extroversion",
+      "agreeableness",
+      "neuroticism"
+    ],
+    "zh": [
+      "經驗開放性",
+      "盡責性",
+      "外向性",
+      "親和性",
+      "情緒不穩定性"
+    ]
+  },
+  "problemList": {
+    "neuroticism": {
+      "name": "情緒不穩定性",
+      "problems": [
+        {
+          "id": "n1",
+          "category": "neuroticism",
+          "problem": "我很少感到憂鬱或沮喪。",
+          "options": [
+            {
+              "fraction": 5,
+              "description": "非常不同意。我總是一點小事就感到挫折，覺得受傷，沒人愛我 QQ。"
+            },
+            {
+              "fraction": 4,
+              "description": "不同意。我看到的窗簾都是藍的，這世界充斥著憂鬱藍RRR。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 2,
+              "description": "同意。很少如此。"
+            },
+            {
+              "fraction": 1,
+              "description": "非常同意。我是負面情緒絕緣體～"
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "category": "neuroticism",
+          "problem": "有時候我覺得怨恨、憤怒。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。我心平氣和，就像佛祖一樣（雙手合十）。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。我心情還算平靜，不太會發怒。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。我有時碰到事情偶爾就會森七七。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。憤怒於我是家常便飯，想恨就恨，想怒就怒！"
+            }
+          ]
+        }
+      ],
+      "description": {
+        "desc": "情緒不穩定性是指在調整情緒時，冒出極端消極情緒的情況與不穩定性。不穩定性高的人在面臨高壓環境時，容易有憤怒、焦慮等消極情緒湧上；不穩定性低的人則較能心平氣和面對、不太會情緒化反應。",
+        "high": "情緒不穩定性較高的你，是不是在面對不預期、碰到對自己不友善的情境時，會覺得自己有喉嚨有股氣憋著、呼吸急促、情緒高漲等狀況，久久不能平復呢？先深呼吸、喝杯水，給自己一些喘息的空間再去對付這些狀況吧。",
+        "low": "情緒不穩定性較低，感覺你能很好地面對各種場面，讓自己處在良好的狀態呢。不過也要記得，負面情緒其實是益友，不斷在耳邊提醒你遇到不好的事情，讓你有所警覺。",
+        "middle": "你的情緒不穩定性介於中間。可參考高分與低分時的說明。"
+      }
+    },
+    "extroversion": {
+      "name": "外向性",
+      "problems": [
+        {
+          "id": "e1",
+          "category": "extroversion",
+          "problem": "我在社交場合中感到很自在",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。才不是因為我沒朋友呢，只是偶覺得不蘇服。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。我在社交場合沒有很自在。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。在社交場合中我滿舒適的。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。整個社交場合就是我的伸展台～"
+            }
+          ]
+        },
+        {
+          "id": "e2",
+          "category": "extroversion",
+          "problem": "我喜歡擔任領導角色。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。我就喜歡默默地待在角落不說話按讚就好。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。沒有特別喜歡領導大家。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。我還算喜歡領導大家。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。我喜歡自己有說服力有自信的樣子（照鏡子看帥臉）。"
+            }
+          ]
+        }
+      ],
+      "description": {
+        "desc": "外向性是喜歡他人陪伴與個體本身活力的程度。外向性較高者，對周遭充滿熱情、喜歡他人陪伴、喜歡快節奏生活；外向性較低者，不會刻意向他人展現熱情、希望較多時間獨處、覺得慢節奏生活不錯。",
+        "high": "外向性高代表你是熱情的化身，對朋友熱情回應，也希望朋友熱情以報。喜歡快節奏的生活，享受刺激感。",
+        "low": "外向性低不代表沒朋友、是個邊緣人，而是多數時候喜歡獨處保有自己的空間。對尋找刺激沒有太大興趣，喜歡慢活日子。你不是面癱，只是沒有那麼想表達情緒出來。",
+        "middle": "你的外向性介於中間。可參考高分與低分時的說明。"
+      }
+    },
+    "openness": {
+      "name": "經驗開放",
+      "problems": [
+        {
+          "id": "o1",
+          "category": "openness",
+          "problem": "我覺得思考抽象的東西是在浪費時間。",
+          "options": [
+            {
+              "fraction": 5,
+              "description": "非常不同意。抽象思考滿有用的，而且很有趣！"
+            },
+            {
+              "fraction": 4,
+              "description": "不同意。抽象思考沒那麼浪費時間。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 2,
+              "description": "同意。做事情感覺較善用時間。"
+            },
+            {
+              "fraction": 1,
+              "description": "非常同意。與其思考漫無邊際的東西，不如做點事情更實在。"
+            }
+          ]
+        },
+        {
+          "id": "o2",
+          "category": "openness",
+          "problem": "我在能發揮創意的環境下，做事最有效率。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。讓我專注在任務本身，那時我的效率才是完全體啊。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。在需要發揮創意時，我做事效率沒比較好。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。在能發揮創意時，我做事效率比較好。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。我的靈感綿綿不絕，做起事來有如神助啊～"
+            }
+          ]
+        }
+      ],
+      "description": {
+        "desc": "是個經驗開放性較高的人呢！是不是常常追求新知、喜歡接觸新事物、內在情感豐富，時時刻刻都迫不及待想體驗這個世界呢？",
+        "high": "是個經驗開放性較低的人呢！是不是對現實的更迭沒有太多興趣、喜歡腳踏實地做事而不是一直在幻想、對待在熟悉的環境中比較自在呢？",
+        "low": "外向性低不代表沒朋友、是個邊緣人，而是多數時候喜歡獨處保有自己的空間。對尋找刺激沒有太大興趣，喜歡慢活日子。你不是面癱，只是沒有那麼想表達情緒出來。",
+        "middle": "你的經驗開放性介於中間。可參考高分與低分時的說明。"
+      }
+    },
+    "agreeableness": {
+      "name": "親和性",
+      "problems": [
+        {
+          "id": "a1",
+          "category": "agreeableness",
+          "problem": "我想要盡最大的能力幫助別人。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。我有能力也不會想幫助別人，浪費力氣。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。抽象思考沒那麼浪費時間。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。有看到的話就會幫忙。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。我是 one for all 信奉者，我想燃燒自己照亮他人。"
+            }
+          ]
+        },
+        {
+          "id": "a2",
+          "category": "agreeableness",
+          "problem": "我很平易近人、對人老實。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。我不想向別人揭露真實的自己，有時會迴避或是戴上假面具。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。我沒那麼平易近人。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。我還算平易近人。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。我覺得待人沒有必要去掩飾什麼，想到什麼就真誠說出來。"
+            }
+          ]
+        }
+      ],
+      "description": {
+        "desc": "親和性是個人對周遭他人的態度。親和性高者相信他人是善良的，通常自身也會有老實、坦率等良善特質，能同理與幫助他人；親和性低者則較站在自身狀態與利益著想，認為人之間需要提防、自己對他人也會有所隱藏。",
+        "high": "親和性較高，是愛的信徒呢！不但自身有著敦厚老實等特質，在別人低潮時也會願意伸出援手，遇到衝突時也會尊重他人。是天使呢！",
+        "low": "親和性較低，是個防禦心較重的人呢。覺得人沒那麼友善，為了保護自己不能把底牌都掀出來。每個人的成長經歷不同，不見得環境都很友善，那有點防禦心也是無可厚非的。在保護自己之餘，記得不要傷害到他人就好。",
+        "middle": "你的親和性介於中間。可參考高分與低分時的說明。"
+      }
+    },
+    "conscientiousness": {
+      "name": "盡責性",
+      "problems": [
+        {
+          "id": "a1",
+          "category": "conscientiousness",
+          "problem": "我做事的進度很穩定。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。時間到我手上，就像水一樣從指尖溜走了（嘆）。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。我覺得進度偶爾會落漆。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。我的進度控管的不錯。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。我的計畫表都已經想到明年去了（推眼鏡）。"
+            }
+          ]
+        },
+        {
+          "id": "a2",
+          "category": "conscientiousness",
+          "problem": "別人都覺得我很謹慎。",
+          "options": [
+            {
+              "fraction": 1,
+              "description": "非常不同意。我想到什麼事情就馬上去做了。"
+            },
+            {
+              "fraction": 2,
+              "description": "不同意。我沒有很謹慎。"
+            },
+            {
+              "fraction": 3,
+              "description": "沒意見。"
+            },
+            {
+              "fraction": 4,
+              "description": "同意。我還算是謹慎。"
+            },
+            {
+              "fraction": 5,
+              "description": "非常同意。我常在床上翻來覆去多次，深思熟慮後才決定做事。"
+            }
+          ]
+        }
+      ],
+      "description": {
+        "desc": "盡責性是個人自我控制程度與延宕滿足需求的能力。盡責性高者較為謹慎，會思考許多面向後才做決定，並高度自律；盡責性較低者則較容易依衝動念頭行事，做事情也較少計畫。",
+        "high": "盡責性較高，代表你的心中可能有一些道德原則，例如懶惰、衝動行事、做出錯誤判斷時會有罪惡感。同時你的生活較自律，可能是蕃茄鐘法的愛好者（一種時間管理工具，以二十五分鐘為單位專注在做事情上）。若對自己要求太高感到喘不過氣時，不妨給自己一點時間到室外走走放鬆心情一下。",
+        "low": "盡責性較低，代表你平常做事時比較少事前規劃，可能是蕃茄醬法的愛好者（習慣在時程接近底限時，才把時間一次全擠出來做事情，就像擠蕃茄醬那樣）。做事情比較三分鐘熱度，認為得過且過就好。這有可能是認為自己能力不夠做不到，或是害怕失敗導致。試著提昇自我能力，以及每天列出三項必做待辦事項慢慢實踐培養信心，或許能有些許改善。",
+        "middle": "你的盡責性介於中間。可參考高分與低分時的說明。"
+      }
+    }
+  },
+  "editor": {
+    "name": "邱繼緯",
+    "hackmd": "https://hackmd.io/tlJrBQkLTbGcLJAbSWArKw?view",
+    "blog": "https://ayugioh2003.github.io/2020/07/about-big-five-personality-traits/"
+  }
+}
