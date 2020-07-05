@@ -58,12 +58,10 @@ new Vue({
           this.tempProduct = {
             imageUrl: [],
           };
-          this.isNew = true;
           $('#productModal').modal('show');
           break;
         case 'edit':
           this.tempProduct = Object.assign({}, item);
-          this.isNew = false;
           $('#productModal').modal('show');
           break;
         case 'delete':
