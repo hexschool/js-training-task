@@ -53,9 +53,7 @@ new Vue({
     openModal(isNew, item) {
       switch (isNew) {
         case 'new':
-          this.tempProduct = {
-            imageUrl: [],
-          };
+          this.tempProduct = {};
           $('#productModal').modal('show');
           break;
         case 'edit':
