@@ -30,9 +30,7 @@ new Vue({
         imageUrl: 'https://images.unsplash.com/photo-1592107761705-30a1bbc641e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80',
       },
     ],
-    tempProduct: {
-      imageUrl: [],
-    },
+    tempProduct: {},
   },
   methods: {
     updateProduct() {
