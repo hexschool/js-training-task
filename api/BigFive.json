@@ -290,7 +290,7 @@
       "name": "盡責性",
       "problems": [
         {
-          "id": "a1",
+          "id": "c1",
           "category": "conscientiousness",
           "problem": "我做事的進度很穩定。",
           "options": [
@@ -317,7 +317,7 @@
           ]
         },
         {
-          "id": "a2",
+          "id": "c2",
           "category": "conscientiousness",
           "problem": "別人都覺得我很謹慎。",
           "options": [
