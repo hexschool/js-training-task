@@ -71,13 +71,11 @@
     <script>
       new Vue({
         el: '#app',
-        data() {
-          return {
-            user: {
-              email: '',
-              password: '',
-            },
-          };
+        data: {
+          user: {
+            email: '',
+            password: '',
+          },
         },
         methods: {
           signin() {
@@ -87,7 +85,7 @@
               const expired = response.data.expired;
               // 寫入 cookie token
               // expires 設置有效時間
-              document.cookie =`token=${token};expires=${new Date(expired * 1000)}; path=/`;
+              document.cookie = `token=${token};expires=${new Date(expired * 1000)}; path=/`;
               window.location = 'Products.html';
             }).catch((error) => {
               console.log(error);

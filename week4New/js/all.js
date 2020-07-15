@@ -1,21 +1,19 @@
 new Vue({
   el: '#app',
-  data() {
-    return {
-      products: [],
-      pagination: {},
-      tempProduct: {
-        imageUrl: [],
-      },
-      isNew: false,
-      status: {
-        fileUploading: false,
-      },
-      user: {
-        token: '',
-        uuid: '8db6e157-f1c7-4688-bf28-c4948d307e8e',
-      },
-    };
+  data: {
+    products: [],
+    pagination: {},
+    tempProduct: {
+      imageUrl: [],
+    },
+    isNew: false,
+    status: {
+      fileUploading: false,
+    },
+    user: {
+      token: '',
+      uuid: '8db6e157-f1c7-4688-bf28-c4948d307e8e',
+    },
   },
   created() {
     // 取得 token 的 cookies

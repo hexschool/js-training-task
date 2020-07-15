@@ -78,6 +78,10 @@
           },
         },
         methods: {
+          /**
+           * 登入
+           * 執行登入 AJAX 後會將 token 與 expired 儲存並寫入 cookie 中，寫入完畢後在跳轉到產品頁面。
+           */
           signin() {
             const api = `https://course-ec-api.hexschool.io/api/auth/login`;
             axios.post(api, this.user).then((response) => {

@@ -67,14 +67,6 @@
       <pagination :pages="pagination" @emit-pages="getProducts"></pagination>
 
       <!-- Modal -->
-      <product-modal ref="productModel" :status="status" :is-new="isNew" :user="user" @update="getProducts">
-      </product-modal>
-
-      <del-product-modal :temp-product="tempProduct" :user="user" @update="getProducts"></del-product-modal>
-    </div>
-
-    <!-- modal 元件建立 -->
-    <script type="text/x-template" id="productModal">
       <div id="productModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -141,13 +133,13 @@
                     <label for="description">產品說明</label>
                     <textarea id="description" v-model="tempProduct.description" type="text" class="form-control"
                       placeholder="請輸入產品說明" required>
-                    </textarea>
+              </textarea>
                   </div>
                   <div class="form-group">
                     <label for="content">產品描述</label>
                     <textarea id="content" v-model="tempProduct.content" type="text" class="form-control"
                       placeholder="請輸入產品描述" required>
-                    </textarea>
+              </textarea>
                   </div>
                   <div class="form-group">
                     <div class="form-check">
@@ -169,9 +161,7 @@
           </div>
         </div>
       </div>
-    </script>
 
-    <script type="text/x-template" id="delProductModal">
       <div id="delProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -199,56 +189,7 @@
           </div>
         </div>
       </div>
-    </script>
-
-    <!-- 分頁元件建立 -->
-    <script type="text/x-template" id="pagination">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li
-            class="page-item"
-            :class="{'disabled': pages.current_page === 1}"
-          >
-            <a
-              class="page-link"
-              href="#"
-              aria-label="Previous"
-              @click.prevent="emitPages(pages.current_page - 1)"
-            >
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li
-            v-for="(item, index) in pages.total_pages"
-            :key="index"
-            class="page-item"
-            :class="{'active': item === pages.current_page}"
-          >
-            <a
-              class="page-link"
-              href="#"
-              @click.prevent="emitPages(item)"
-            >{{ item }}</a>
-          </li>
-          <li
-            class="page-item"
-            :class="{'disabled': pages.current_page === pages.total_pages}"
-          >
-            <a
-              class="page-link"
-              href="#"
-              aria-label="Next"
-  
-              @click.prevent="emitPages(pages.current_page + 1)"
-            >
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </script>
-
-
+    </div>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -262,224 +203,11 @@
       </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 分頁元件建立 -->
+    <script src="./js/pagination.js"></script>
+    <!-- 主要 JS -->
+    <script src="./js/all.js"></script>
 
-    <script>
-      Vue.component('delProductModal', {
-        template: '#delProductModal',
-        data() {
-          return {
-          };
-        },
-        props: {
-          tempProduct: {
-            type: Object,
-            default() {
-              return {
-                imageUrl: [],
-              };
-            },
-          },
-          user: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
-        },
-        methods: {
-          // 刪除產品
-          delProduct() {
-            const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-
-            //預設帶入 token
-            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-            axios.delete(url).then(() => {
-              $('#delProductModal').modal('hide');
-              this.$emit('update');
-            });
-          },
-        }
-      });
-
-      Vue.component('productModal', {
-        template: '#productModal',
-        data() {
-          return {
-            tempProduct: {
-              imageUrl: [],
-            },
-          };
-        },
-        props: {
-          productid: {
-            type: String,
-            default: '',
-          },
-          status: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
-          isNew: {
-            type: Boolean,
-            default: true,
-          },
-          user: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
-        },
-        methods: {
-          getProduct(id) {
-            const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
-            axios.get(api).then((res) => {
-              $('#productModal').modal('show');
-              this.tempProduct = res.data.data;
-            }).catch((error) => {
-              console.log(error);
-            });
-          },
-          // 上傳產品資料
-          updateProduct() {
-            // 新增商品
-            let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
-            let httpMethod = 'post';
-            // 當不是新增商品時則切換成編輯商品 API
-            if (!this.isNew) {
-              api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-              httpMethod = 'patch';
-            }
-
-            //預設帶入 token
-            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-            axios[httpMethod](api, this.tempProduct).then(() => {
-              $('#productModal').modal('hide');
-              this.$emit('update');
-            }).catch((error) => {
-              console.log(error)
-            });
-          },
-          // 上傳檔案
-          uploadFile() {
-            const uploadedFile = this.$refs.file.files[0];
-            const formData = new FormData();
-            formData.append('file', uploadedFile);
-            const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/storage`;
-            this.status.fileUploading = true;
-            axios.post(url, formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }).then((response) => {
-              this.status.fileUploading = false;
-              if (response.status === 200) {
-                this.tempProduct.imageUrl.push(response.data.data.path);
-              }
-            }).catch(() => {
-              console.log('上傳不可超過 2 MB');
-              this.status.fileUploading = false;
-            });
-          },
-        },
-      });
-
-      Vue.component('pagination', {
-        template: '#pagination',
-        data() {
-          return {
-          };
-        },
-        props: {
-          pages: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
-        },
-        methods: {
-          emitPages(item) {
-            this.$emit('emit-pages', item);
-          },
-        },
-      });
-
-      new Vue({
-        el: '#app',
-        data: {
-          products: [],
-          pagination: {},
-          tempProduct: {
-            imageUrl: [],
-          },
-          isNew: false,
-          status: {
-            fileUploading: false,
-          },
-          user: {
-            token: '',
-            uuid: '8db6e157-f1c7-4688-bf28-c4948d307e8e',
-          },
-        },
-        created() {
-          // 取得 token 的 cookies
-          // 詳情請見：https://developer.mozilla.org/zh-CN/docs/Web/API/Document/cookie
-          this.user.token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-          // 若無法取得 token 則返回 Login 頁面
-          if (this.user.token === '') {
-            window.location = 'Login.html';
-          }
-
-          this.getProducts();
-        },
-        methods: {
-          // 取得產品資料
-          getProducts(page = 1) {
-            const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products?page=${page}`;
-            //預設帶入 token
-            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-            axios.get(api).then((response) => {
-              this.products = response.data.data;
-              this.pagination = response.data.meta.pagination;
-            });
-          },
-          // 開啟 Modal 視窗
-          openModal(isNew, item) {
-            switch (isNew) {
-              case 'new':
-                this.tempProduct = {
-                  imageUrl: [],
-                };
-                this.isNew = true;
-                $('#productModal').modal('show');
-                break;
-              case 'edit':
-                this.tempProduct = Object.assign({}, item);
-                // 使用 refs 觸發子元件方法
-                this.$refs.productModel.getProduct(this.tempProduct.id);
-                this.isNew = false;
-                break;
-              case 'delete':
-                this.tempProduct = Object.assign({}, item);
-                $('#delProductModal').modal('show');
-                break;
-              default:
-                break;
-            }
-          },
-        },
-      })
-    </script>
   </body>
 
 </html>
