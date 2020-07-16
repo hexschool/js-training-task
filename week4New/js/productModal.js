@@ -24,7 +24,7 @@ Vue.component('productModal', {
                 或 上傳圖片
                 <i v-if="status.fileUploading" class="fas fa-spinner fa-spin"></i>
               </label>
-              <input id="customFile" ref="file" type="file" class="form-control" @change="uploadFile">
+              <input id="customFile" ref="file" type="file" class="form-control" @change="emitFile">
             </div>
             <img class="img-fluid" :src="tempProduct.imageUrl[0]" alt />
           </div>
@@ -86,7 +86,7 @@ Vue.component('productModal', {
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
           取消
         </button>
-        <button type="button" class="btn btn-primary" @click="updateProduct">
+        <button type="button" class="btn btn-primary" @click="emitProduct">
           確認
         </button>
       </div>
@@ -95,9 +95,6 @@ Vue.component('productModal', {
 </div>`,
   data() {
     return {
-      tempProduct: {
-        imageUrl: [],
-      },
     };
   },
   props: {
@@ -105,58 +102,16 @@ Vue.component('productModal', {
     status: {},
     isNew: true,
     user: {},
+    tempProduct: {
+      imageUrl: [],
+    }
   },
   methods: {
-    getProduct(id) {
-      const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
-      axios.get(api).then((res) => {
-        $('#productModal').modal('show');
-        this.tempProduct = res.data.data;
-      }).catch((error) => {
-        console.log(error);
-      });
+    emitProduct() {
+      this.$emit('emit-product', this.tempProduct.id);
     },
-    // 上傳產品資料
-    updateProduct() {
-      // 新增商品
-      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
-      let httpMethod = 'post';
-      // 當不是新增商品時則切換成編輯商品 API
-      if (!this.isNew) {
-        api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-        httpMethod = 'patch';
-      }
-
-      //預設帶入 token
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-      axios[httpMethod](api, this.tempProduct).then(() => {
-        $('#productModal').modal('hide');
-        this.$emit('update');
-      }).catch((error) => {
-        console.log(error)
-      });
-    },
-    // 上傳檔案
-    uploadFile() {
-      const uploadedFile = this.$refs.file.files[0];
-      const formData = new FormData();
-      formData.append('file', uploadedFile);
-      const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/storage`;
-      this.status.fileUploading = true;
-      axios.post(url, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then((response) => {
-        this.status.fileUploading = false;
-        if (response.status === 200) {
-          this.tempProduct.imageUrl.push(response.data.data.path);
-        }
-      }).catch(() => {
-        console.log('上傳不可超過 2 MB');
-        this.status.fileUploading = false;
-      });
+    emitFile() {
+      this.$emit('emit-file', this.$refs.file.files[0]);
     },
   },
 });

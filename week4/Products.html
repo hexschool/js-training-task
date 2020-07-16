@@ -67,16 +67,15 @@
       <pagination :pages="pagination" @emit-pages="getProducts"></pagination>
 
       <!-- Modal -->
-      <product-modal ref="productModel" :status="status" :is-new="isNew" :user="user" @update="getProducts">
-      </product-modal>
+      <product-modal ref="productModel" :status="status" :is-new="isNew" :user="user" :temp-product="tempProduct" @emit-product="updateProduct" @emit-file="uploadFile"></product-modal>
 
-      <del-product-modal :temp-product="tempProduct" :user="user" @update="getProducts"></del-product-modal>
+      <del-product-modal :temp-product="tempProduct" :user="user" @emit-del="delProduct"></del-product-modal>
     </div>
 
     <!-- modal 元件建立 -->
     <script type="text/x-template" id="productModal">
       <div id="productModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+  aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
@@ -100,7 +99,7 @@
                       或 上傳圖片
                       <i v-if="status.fileUploading" class="fas fa-spinner fa-spin"></i>
                     </label>
-                    <input id="customFile" ref="file" type="file" class="form-control" @change="uploadFile">
+                    <input id="customFile" ref="file" type="file" class="form-control" @change="emitFile">
                   </div>
                   <img class="img-fluid" :src="tempProduct.imageUrl[0]" alt />
                 </div>
@@ -162,7 +161,7 @@
               <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                 取消
               </button>
-              <button type="button" class="btn btn-primary" @click="updateProduct">
+              <button type="button" class="btn btn-primary" @click="emitProduct">
                 確認
               </button>
             </div>
@@ -192,7 +191,7 @@
               <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
                 取消
               </button>
-              <button type="button" class="btn btn-danger" @click="delProduct">
+              <button type="button" class="btn btn-danger" @click="emitDel">
                 確認刪除
               </button>
             </div>
@@ -272,34 +271,14 @@
         },
         props: {
           tempProduct: {
-            type: Object,
-            default() {
-              return {
-                imageUrl: [],
-              };
-            },
+            imageUrl: [],
           },
-          user: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
+          user: {},
         },
         methods: {
-          // 刪除產品
-          delProduct() {
-            const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-
-            //預設帶入 token
-            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-            axios.delete(url).then(() => {
-              $('#delProductModal').modal('hide');
-              this.$emit('update');
-            });
-          },
+          emitDel() {
+            this.$emit('emit-del', this.tempProduct.id);
+          }
         }
       });
 
@@ -307,86 +286,23 @@
         template: '#productModal',
         data() {
           return {
-            tempProduct: {
-              imageUrl: [],
-            },
           };
         },
         props: {
-          productid: {
-            type: String,
-            default: '',
-          },
-          status: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
-          isNew: {
-            type: Boolean,
-            default: true,
-          },
-          user: {
-            type: Object,
-            default() {
-              return {
-              };
-            },
-          },
+          productid: '',
+          status: {},
+          isNew: true,
+          user: {},
+          tempProduct: {
+            imageUrl: [],
+          }
         },
         methods: {
-          getProduct(id) {
-            const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
-            axios.get(api).then((res) => {
-              $('#productModal').modal('show');
-              this.tempProduct = res.data.data;
-            }).catch((error) => {
-              console.log(error);
-            });
+          emitProduct() {
+            this.$emit('emit-product', this.tempProduct.id);
           },
-          // 上傳產品資料
-          updateProduct() {
-            // 新增商品
-            let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
-            let httpMethod = 'post';
-            // 當不是新增商品時則切換成編輯商品 API
-            if (!this.isNew) {
-              api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-              httpMethod = 'patch';
-            }
-
-            //預設帶入 token
-            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-            axios[httpMethod](api, this.tempProduct).then(() => {
-              $('#productModal').modal('hide');
-              this.$emit('update');
-            }).catch((error) => {
-              console.log(error)
-            });
-          },
-          // 上傳檔案
-          uploadFile() {
-            const uploadedFile = this.$refs.file.files[0];
-            const formData = new FormData();
-            formData.append('file', uploadedFile);
-            const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/storage`;
-            this.status.fileUploading = true;
-            axios.post(url, formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }).then((response) => {
-              this.status.fileUploading = false;
-              if (response.status === 200) {
-                this.tempProduct.imageUrl.push(response.data.data.path);
-              }
-            }).catch(() => {
-              console.log('上傳不可超過 2 MB');
-              this.status.fileUploading = false;
-            });
+          emitFile() {
+            this.$emit('emit-file', this.$refs.file.files[0]);
           },
         },
       });
@@ -457,8 +373,7 @@
           openModal(isNew, item) {
             switch (isNew) {
               case 'new':
-                // 使用 refs 觸發子元件清空
-                this.$refs.productModel.tempProduct = {
+                this.tempProduct = {
                   imageUrl: [],
                 };
                 this.isNew = true;
@@ -466,8 +381,7 @@
                 break;
               case 'edit':
                 this.tempProduct = Object.assign({}, item);
-                // 使用 refs 觸發子元件方法
-                this.$refs.productModel.getProduct(this.tempProduct.id);
+                this.getProduct(this.tempProduct.id);
                 this.isNew = false;
                 break;
               case 'delete':
@@ -477,6 +391,68 @@
               default:
                 break;
             }
+          },
+          getProduct(id) {
+            const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
+            axios.get(api).then((res) => {
+              $('#productModal').modal('show');
+              this.tempProduct = res.data.data;
+            }).catch((error) => {
+              console.log(error);
+            });
+          },
+          // 上傳產品資料
+          updateProduct() {
+            // 新增商品
+            let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
+            let httpMethod = 'post';
+            // 當不是新增商品時則切換成編輯商品 API
+            if (!this.isNew) {
+              api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
+              httpMethod = 'patch';
+            }
+
+            //預設帶入 token
+            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
+
+            axios[httpMethod](api, this.tempProduct).then(() => {
+              $('#productModal').modal('hide');
+              this.getProducts();
+            }).catch((error) => {
+              console.log(error)
+            });
+          },
+          // 上傳檔案
+          uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/storage`;
+            this.status.fileUploading = true;
+            axios.post(url, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }).then((response) => {
+              this.status.fileUploading = false;
+              if (response.status === 200) {
+                this.tempProduct.imageUrl.push(response.data.data.path);
+              }
+            }).catch(() => {
+              console.log('上傳不可超過 2 MB');
+              this.status.fileUploading = false;
+            });
+          },
+          // 刪除產品
+          delProduct(id) {
+            const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
+
+            //預設帶入 token
+            axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
+
+            axios.delete(url).then(() => {
+              $('#delProductModal').modal('hide');
+              this.getProducts();
+            });
           },
         },
       })
