@@ -457,7 +457,8 @@
           openModal(isNew, item) {
             switch (isNew) {
               case 'new':
-                this.tempProduct = {
+                // 使用 refs 觸發子元件清空
+                this.$refs.productModel.tempProduct = {
                   imageUrl: [],
                 };
                 this.isNew = true;

@@ -42,7 +42,7 @@ new Vue({
     openModal(isNew, item) {
       switch (isNew) {
         case 'new':
-          this.tempProduct = {
+          this.$refs.productModel.tempProduct = {
             imageUrl: [],
           };
           this.isNew = true;
