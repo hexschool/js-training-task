@@ -42,7 +42,7 @@ new Vue({
     openModal(isNew, item) {
       switch (isNew) {
         case 'new':
-          this.tempProduct = {
+          this.$refs.productModel.tempProduct = {
             imageUrl: [],
           };
           this.isNew = true;
@@ -50,7 +50,8 @@ new Vue({
           break;
         case 'edit':
           this.tempProduct = Object.assign({}, item);
-          this.getProduct(this.tempProduct.id);
+          // 使用 refs 觸發子元件方法
+          this.$refs.productModel.getProduct(this.tempProduct.id);
           this.isNew = false;
           break;
         case 'delete':
@@ -60,68 +61,6 @@ new Vue({
         default:
           break;
       }
-    },
-    getProduct(id) {
-      const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
-      axios.get(api).then((res) => {
-        $('#productModal').modal('show');
-        this.tempProduct = res.data.data;
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    // 上傳產品資料
-    updateProduct() {
-      // 新增商品
-      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
-      let httpMethod = 'post';
-      // 當不是新增商品時則切換成編輯商品 API
-      if (!this.isNew) {
-        api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-        httpMethod = 'patch';
-      }
-
-      //預設帶入 token
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-      axios[httpMethod](api, this.tempProduct).then(() => {
-        $('#productModal').modal('hide');
-        this.getProducts();
-      }).catch((error) => {
-        console.log(error)
-      });
-    },
-    // 上傳檔案
-    uploadFile(file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/storage`;
-      this.status.fileUploading = true;
-      axios.post(url, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then((response) => {
-        this.status.fileUploading = false;
-        if (response.status === 200) {
-          this.tempProduct.imageUrl.push(response.data.data.path);
-        }
-      }).catch(() => {
-        console.log('上傳不可超過 2 MB');
-        this.status.fileUploading = false;
-      });
-    },
-    // 刪除產品
-    delProduct(id) {
-      const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
-
-      //預設帶入 token
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-      axios.delete(url).then(() => {
-        $('#delProductModal').modal('hide');
-        this.getProducts();
-      });
     },
   },
 })

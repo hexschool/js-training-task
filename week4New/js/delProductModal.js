@@ -19,7 +19,7 @@ Vue.component('delProductModal', {
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
           取消
         </button>
-        <button type="button" class="btn btn-danger" @click="emitDel">
+        <button type="button" class="btn btn-danger" @click="delProduct">
           確認刪除
         </button>
       </div>
@@ -30,15 +30,19 @@ Vue.component('delProductModal', {
     return {
     };
   },
-  props: {
-    tempProduct: {
-      imageUrl: [],
-    },
-    user: {},
-  },
+  props: ['tempProduct', 'user'],
   methods: {
-    emitDel() {
-      this.$emit('emit-del', this.tempProduct.id);
-    }
+    // 刪除產品
+    delProduct() {
+      const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
+
+      //預設帶入 token
+      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
+
+      axios.delete(url).then(() => {
+        $('#delProductModal').modal('hide');
+        this.$emit('update');
+      });
+    },
   }
 });
