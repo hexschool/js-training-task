@@ -104,7 +104,7 @@ new Vue({
         this.isLoading = false;
       });
     },
-    updateQuantity(id, num) {
+    quantityUpdata(id, num) {
       this.isLoading = true;
       const url = `${this.APIPATH}/api/${this.UUID}/ec/shopping`;
 
