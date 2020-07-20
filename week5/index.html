@@ -33,12 +33,16 @@
                 {{ item.content }}
               </p>
               <div class="d-flex justify-content-between align-items-baseline">
+                <!-- 售價(price)欄位是可選的，因此售價若為空，就顯示原價(origin_price)
+                售價若不為空，就顯示原價(origin_price)與售價(price) -->
                 <div v-if="!item.price" class="h5">
                   {{ item.origin_price }} 元
                 </div>
-                <del v-if="item.price" class="h6">原價 {{ item.origin_price }} 元</del>
-                <div v-if="item.price" class="h5">
-                  現在只要 {{ item.price }} 元
+                <div v-else>
+                  <del class="h6">原價 {{ item.origin_price }} 元</del>
+                  <div class="h5">
+                    現在只要 {{ item.price }} 元
+                  </div>
                 </div>
               </div>
             </div>
