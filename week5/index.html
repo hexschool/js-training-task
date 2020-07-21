@@ -107,7 +107,7 @@
                 小計
                 <strong>{{ tempProduct.num * tempProduct.price }}</strong> 元
               </div>
-              <button type="button" class="btn btn-primary" @click="addtoCart(tempProduct, tempProduct.num)">
+              <button type="button" class="btn btn-primary" @click="addToCart(tempProduct, tempProduct.num)">
                 <i v-if="tempProduct.id === status.loadingItem" class="fas fa-spinner fa-spin"></i>
                 加到購物車
               </button>
