@@ -36,6 +36,7 @@ new Vue({
       tel: '',
       address: '',
       payment: '',
+      message: '',
     },
     cart: {},
     cartTotal: 0,
@@ -141,9 +142,7 @@ new Vue({
       this.isLoading = true;
       const url = `${this.APIPATH}/api/${this.UUID}/ec/orders`;
 
-      const tempOrder = Object.assign({}, this.form);
-
-      axios.post(url, tempOrder).then((response) => {
+      axios.post(url, this.form).then((response) => {
         if (response.data.data.id) {
           this.isLoading = false;
           // 跳出提示訊息
