@@ -31,10 +31,6 @@ const routes = [
   },
   // 巢狀路由
   {
-    path: '/login',
-    component: () => import('../views/dashboard/Login.vue'),
-  },
-  {
     path: '/admin',
     component: () => import('../views/Dashboard.vue'),
     children: [
