@@ -106,6 +106,9 @@ new Vue({
       });
     },
     quantityUpdata(id, num) {
+      // 避免商品數量低於 0 個
+      if(num <= 0) return;
+
       this.isLoading = true;
       const url = `${this.APIPATH}/api/${this.UUID}/ec/shopping`;
 
