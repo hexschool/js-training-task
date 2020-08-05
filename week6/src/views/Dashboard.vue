@@ -8,7 +8,7 @@
       <router-link to="/admin/orders">購物車列表</router-link> |
       <a href="#" @click.prevent="signout">登出</a>
     </div>
-    <router-view :token="token" v-if="checkSuccess"></router-view>
+    <router-view v-if="checkSuccess"></router-view>
   </div>
 </template>
 
